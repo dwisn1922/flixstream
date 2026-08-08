@@ -1,0 +1,232 @@
+const express = require('express');
+const path = require('path');
+const https = require('https');
+
+const app = express();
+const PORT = 3000;
+
+// TMDB API
+const TMDB_KEY = '2dca580c2a14b55200e784d157207b4d';
+const TMDB_BASE = 'https://api.themoviedb.org/3';
+const TMDB_IMG = 'https://image.tmdb.org/t/p';
+
+// Helper: fetch from TMDB
+function tmdbFetch(endpoint, params = {}) {
+    return new Promise((resolve, reject) => {
+        const url = new URL(`${TMDB_BASE}${endpoint}`);
+        url.searchParams.set('api_key', TMDB_KEY);
+        url.searchParams.set('language', 'id-ID');
+        Object.entries(params).forEach(([k, v]) => {
+            if (v !== undefined && v !== '') url.searchParams.set(k, v);
+        });
+
+        https.get(url.toString(), { headers: { 'User-Agent': 'Absolute Cinema/1.0' } }, (res) => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => {
+                try { resolve(JSON.parse(data)); }
+                catch (e) { reject(e); }
+            });
+        }).on('error', reject);
+    });
+}
+
+// API: Trending
+app.get('/api/trending', async (req, res) => {
+    try {
+        const page = req.query.page || 1;
+        const data = await tmdbFetch('/trending/all/week', { page });
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// API: Discover movies
+app.get('/api/discover', async (req, res) => {
+    try {
+        const { type = 'movie', genre, page = 1, sort_by = 'popularity.desc' } = req.query;
+        const endpoint = type === 'tv' ? '/discover/tv' : '/discover/movie';
+        const data = await tmdbFetch(endpoint, {
+            page,
+            sort_by,
+            with_genres: genre || undefined,
+            'vote_count.gte': 100
+        });
+        // Add media_type to results
+        data.results = data.results.map(r => ({ ...r, media_type: type }));
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// API: Search
+app.get('/api/search', async (req, res) => {
+    try {
+        const { q, page = 1 } = req.query;
+        const data = await tmdbFetch('/search/multi', { query: q, page });
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// API: Movie details
+app.get('/api/movie/:id', async (req, res) => {
+    try {
+        const data = await tmdbFetch(`/movie/${req.params.id}`, {
+            append_to_response: 'credits,videos,similar,recommendations'
+        });
+        data.media_type = 'movie';
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// API: TV details
+app.get('/api/tv/:id', async (req, res) => {
+    try {
+        const data = await tmdbFetch(`/tv/${req.params.id}`, {
+            append_to_response: 'credits,videos,similar,recommendations'
+        });
+        data.media_type = 'tv';
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// API: TV Seasons
+app.get('/api/tv/:id/season/:season', async (req, res) => {
+    try {
+        const data = await tmdbFetch(`/tv/${req.params.id}/season/${req.params.season}`);
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// API: Genres
+app.get('/api/genres', async (req, res) => {
+    try {
+        const type = req.query.type || 'movie';
+        const endpoint = type === 'tv' ? '/genre/tv/list' : '/genre/movie/list';
+        const data = await tmdbFetch(endpoint);
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// API: Now Playing
+app.get('/api/now-playing', async (req, res) => {
+    try {
+        const data = await tmdbFetch('/movie/now_playing', { page: 1 });
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// API: Latest Releases (sorted by release date desc)
+app.get('/api/latest', async (req, res) => {
+    try {
+        const page = req.query.page || 1;
+        const data = await tmdbFetch('/discover/movie', {
+            page,
+            sort_by: 'primary_release_date.desc',
+            'primary_release_date.lte': new Date().toISOString().split('T')[0],
+            'vote_count.gte': 50
+        });
+        data.results = data.results.map(r => ({ ...r, media_type: 'movie' }));
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// API: Upcoming
+app.get('/api/upcoming', async (req, res) => {
+    try {
+        const data = await tmdbFetch('/movie/upcoming', { page: 1 });
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// API: Popular
+app.get('/api/popular', async (req, res) => {
+    try {
+        const type = req.query.type || 'movie';
+        const endpoint = type === 'tv' ? '/tv/popular' : '/movie/popular';
+        const data = await tmdbFetch(endpoint, { page: req.query.page || 1 });
+        data.results = data.results.map(r => ({ ...r, media_type: type }));
+        res.json(data);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// SEO: robots.txt
+app.get('/robots.txt', (req, res) => {
+    res.type('text/plain');
+    res.send(`User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://nontonfilmgratis.xyz/sitemap.xml`);
+});
+
+// SEO: Dynamic sitemap.xml
+app.get('/sitemap.xml', async (req, res) => {
+    try {
+        const data = await tmdbFetch('/trending/all/week', { page: 1 });
+        let urls = `<url><loc>https://nontonfilmgratis.xyz/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>`;
+
+        (data.results || []).forEach(item => {
+            const type = item.media_type || 'movie';
+            const slug = (item.title || item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            urls += `<url><loc>https://nontonfilmgratis.xyz/${type}/${item.id}-${slug}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`;
+        });
+
+        // Blog pages
+        const blogSlugs = ['film-action-terbaru-2026', 'film-horror-terbaru-2026', 'nonton-film-gratis-subtitle-indonesia', 'serial-tv-terbaik-2026', 'nonton-mortal-kombat-2-subtitle-indonesia', 'nonton-spider-man-brand-new-day-subtitle-indonesia', 'situs-nonton-film-gratis-2026', 'nonton-toy-story-5-subtitle-indonesia', 'nonton-scary-movie-2026-subtitle-indonesia', 'nonton-backrooms-subtitle-indonesia', 'nonton-the-super-mario-galaxy-movie', 'nonton-obsession-2026-subtitle-indonesia', 'film-komedi-terbaik-2026', 'film-romantis-terbaik-2026', 'film-thriller-terbaik-2026', 'film-animasi-terbaik-2026', 'film-sci-fi-terbaik-2026', 'cara-nonton-film-tanpa-iklan', 'cara-download-film-gratis', 'film-indonesia-terbaru-2026', 'drama-korea-terbaru-2026', 'anime-terbaru-2026', 'film-marvel-terbaru-2026', 'nonton-film-bioskop-gratis', 'rekomendasi-film-untuk-nge-date', 'film-yang-bikin-nangis', 'nonton-film-dc-terbaru'];
+        blogSlugs.forEach(slug => {
+            urls += `<url><loc>https://nontonfilmgratis.xyz/blog/${slug}</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>`;
+        });
+        urls += `<url><loc>https://nontonfilmgratis.xyz/blog</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>`;
+        urls += `<url><loc>https://nontonfilmgratis.xyz/dmca</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>`;
+
+        res.type('application/xml');
+        res.send(`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}</urlset>`);
+    } catch (e) {
+        res.type('application/xml');
+        res.send('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>');
+    }
+});
+
+// Image proxy (redirect to TMDB CDN)
+app.get('/img/:size/{*path}', (req, res) => {
+    const size = req.params.size;
+    const filePath = req.params.path;
+    res.redirect(`${TMDB_IMG}/${size}/${filePath}`);
+});
+
+// Movie/TV detail routes (SEO-friendly URLs)
+// Handles both /movie/123 and /movie/slug-name
+app.get('/movie/:idOrSlug', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+app.get('/tv/:idOrSlug', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Blog routes
+app.get('/blog', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'blog', 'index.html'));
+});
+app.get('/blog/:slug', (req, res) => {
+    const filePath = path.join(__dirname, 'public', 'blog', `${req.params.slug}.html`);
+    res.sendFile(filePath, (err) => {
+        if (err) res.status(404).sendFile(path.join(__dirname, 'public', 'blog', 'index.html'));
+    });
+});
+
+// DMCA page route
+app.get('/dmca', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'dmca.html'));
+});
+
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// All other routes -> index.html
+app.use((req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Absolute Cinema running on http://0.0.0.0:${PORT}`);
+});

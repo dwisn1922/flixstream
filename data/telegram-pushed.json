@@ -1,0 +1,204 @@
+{
+  "pushed": {
+    "94664": {
+      "title": "Mushoku Tensei",
+      "type": "tv",
+      "rating": 8.559,
+      "popularity": 206.845,
+      "genres": [
+        10759,
+        16,
+        10765
+      ],
+      "year": "2021",
+      "pushedAt": "2026-07-05T12:00:03.276Z"
+    },
+    "94997": {
+      "title": "House of the Dragon",
+      "type": "tv",
+      "rating": 8.371,
+      "popularity": 361.3376,
+      "genres": [
+        10765,
+        18,
+        10759
+      ],
+      "year": "2022",
+      "pushedAt": "2026-07-23T00:00:03.530Z"
+    },
+    "125988": {
+      "title": "Silo",
+      "type": "tv",
+      "rating": 8.2,
+      "popularity": 170.0016,
+      "genres": [
+        10765,
+        18
+      ],
+      "year": "2023",
+      "pushedAt": "2026-07-04T12:00:03.348Z"
+    },
+    "969681": {
+      "title": "Spider-Man: Brand New Day",
+      "type": "movie",
+      "rating": 7.7,
+      "popularity": 410.4648,
+      "genres": [
+        878,
+        28,
+        12
+      ],
+      "year": "2026",
+      "pushedAt": "2026-07-29T12:00:02.892Z"
+    },
+    "1083381": {
+      "title": "Backrooms",
+      "type": "movie",
+      "rating": 7.021,
+      "popularity": 447.964,
+      "genres": [
+        27,
+        9648,
+        878
+      ],
+      "year": "2026",
+      "pushedAt": "2026-07-18T12:00:03.133Z"
+    },
+    "1202033": {
+      "title": "Enola Holmes 3",
+      "type": "movie",
+      "rating": 7.189,
+      "popularity": 162.9909,
+      "genres": [
+        12,
+        80,
+        9648,
+        28
+      ],
+      "year": "2026",
+      "pushedAt": "2026-07-03T12:00:03.904Z"
+    },
+    "1275779": {
+      "title": "Disclosure Day",
+      "type": "movie",
+      "rating": 6.694,
+      "popularity": 462.8826,
+      "genres": [
+        878,
+        53
+      ],
+      "year": "2026",
+      "pushedAt": "2026-07-20T00:00:02.976Z"
+    },
+    "1339713": {
+      "title": "Obsession",
+      "type": "movie",
+      "rating": 8.276,
+      "popularity": 697.4596,
+      "genres": [
+        27,
+        53
+      ],
+      "year": "2026",
+      "pushedAt": "2026-07-12T00:00:03.118Z"
+    },
+    "1368337": {
+      "title": "The Odyssey",
+      "type": "movie",
+      "rating": 6.939,
+      "popularity": 226.2542,
+      "genres": [
+        12,
+        28,
+        14
+      ],
+      "year": "2026",
+      "pushedAt": "2026-07-17T12:00:03.959Z"
+    }
+  },
+  "pushed_2026-06-19": true,
+  "lastRun": "2026-07-30T00:00:02.253Z",
+  "lastRunSummary": {
+    "pushed": 0,
+    "skipped": 5,
+    "total": 5,
+    "slot": "morning"
+  },
+  "pushed_2026-06-20_evening": true,
+  "lastWeeklyRecap": "2026-07-26T00:00:02.695Z",
+  "pushed_2026-06-21_morning": true,
+  "pushed_2026-06-21_evening": true,
+  "pushed_2026-06-22_morning": true,
+  "pushed_2026-06-22_evening": true,
+  "pushed_2026-06-23_morning": true,
+  "pushed_2026-06-23_evening": true,
+  "pushed_2026-06-24_morning": true,
+  "pushed_2026-06-24_evening": true,
+  "pushed_2026-06-25_morning": true,
+  "pushed_2026-06-25_evening": true,
+  "pushed_2026-06-26_morning": true,
+  "pushed_2026-06-26_evening": true,
+  "pushed_2026-06-27_morning": true,
+  "pushed_2026-06-27_evening": true,
+  "pushed_2026-06-28_evening": true,
+  "pushed_2026-06-29_morning": true,
+  "pushed_2026-06-29_evening": true,
+  "pushed_2026-06-30_morning": true,
+  "pushed_2026-06-30_evening": true,
+  "pushed_2026-07-01_morning": true,
+  "pushed_2026-07-01_evening": true,
+  "pushed_2026-07-02_morning": true,
+  "pushed_2026-07-02_evening": true,
+  "pushed_2026-07-03_morning": true,
+  "pushed_2026-07-03_evening": true,
+  "pushed_2026-07-04_morning": true,
+  "pushed_2026-07-04_evening": true,
+  "pushed_2026-07-05_evening": true,
+  "pushed_2026-07-06_morning": true,
+  "pushed_2026-07-06_evening": true,
+  "pushed_2026-07-07_morning": true,
+  "pushed_2026-07-07_evening": true,
+  "pushed_2026-07-08_morning": true,
+  "pushed_2026-07-08_evening": true,
+  "pushed_2026-07-09_morning": true,
+  "pushed_2026-07-09_evening": true,
+  "pushed_2026-07-10_morning": true,
+  "pushed_2026-07-10_evening": true,
+  "pushed_2026-07-11_morning": true,
+  "pushed_2026-07-11_evening": true,
+  "pushed_2026-07-12_morning": true,
+  "pushed_2026-07-12_evening": true,
+  "pushed_2026-07-13_morning": true,
+  "pushed_2026-07-13_evening": true,
+  "pushed_2026-07-14_morning": true,
+  "pushed_2026-07-14_evening": true,
+  "pushed_2026-07-15_morning": true,
+  "pushed_2026-07-15_evening": true,
+  "pushed_2026-07-16_morning": true,
+  "pushed_2026-07-16_evening": true,
+  "pushed_2026-07-17_morning": true,
+  "pushed_2026-07-17_evening": true,
+  "pushed_2026-07-18_morning": true,
+  "pushed_2026-07-18_evening": true,
+  "pushed_2026-07-19_evening": true,
+  "pushed_2026-07-20_morning": true,
+  "pushed_2026-07-20_evening": true,
+  "pushed_2026-07-21_morning": true,
+  "pushed_2026-07-21_evening": true,
+  "pushed_2026-07-22_morning": true,
+  "pushed_2026-07-22_evening": true,
+  "pushed_2026-07-23_morning": true,
+  "pushed_2026-07-23_evening": true,
+  "pushed_2026-07-24_morning": true,
+  "pushed_2026-07-24_evening": true,
+  "pushed_2026-07-25_morning": true,
+  "pushed_2026-07-25_evening": true,
+  "pushed_2026-07-26_evening": true,
+  "pushed_2026-07-27_morning": true,
+  "pushed_2026-07-27_evening": true,
+  "pushed_2026-07-28_morning": true,
+  "pushed_2026-07-28_evening": true,
+  "pushed_2026-07-29_morning": true,
+  "pushed_2026-07-29_evening": true,
+  "pushed_2026-07-30_morning": true
+}

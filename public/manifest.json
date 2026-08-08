@@ -1,0 +1,82 @@
+{
+    "name": "Absolute Cinema - Nonton Film Gratis Subtitle Indonesia",
+    "short_name": "Absolute Cinema",
+    "description": "Nonton film gratis subtitle Indonesia terlengkap. Streaming movie dan serial TV online kualitas HD.",
+    "start_url": "/?utm_source=pwa",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "any",
+    "theme_color": "#0f0f1a",
+    "background_color": "#0f0f1a",
+    "lang": "id-ID",
+    "dir": "ltr",
+    "categories": ["entertainment", "video", "lifestyle"],
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "/favicon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/favicon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/screenshot-mobile.png",
+            "sizes": "390x844",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Mobile home"
+        },
+        {
+            "src": "/screenshot-desktop.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Desktop home"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Movies",
+            "short_name": "Film",
+            "description": "Daftar film terbaru",
+            "url": "/movies",
+            "icons": [{"src": "/favicon-192.png", "sizes": "192x192"}]
+        },
+        {
+            "name": "TV Shows",
+            "short_name": "Serial TV",
+            "description": "Daftar serial TV terbaru",
+            "url": "/tv",
+            "icons": [{"src": "/favicon-192.png", "sizes": "192x192"}]
+        },
+        {
+            "name": "Blog",
+            "short_name": "Blog",
+            "description": "Artikel dan review film",
+            "url": "/blog",
+            "icons": [{"src": "/favicon-192.png", "sizes": "192x192"}]
+        }
+    ],
+    "share_target": {
+        "action": "/",
+        "method": "GET",
+        "params": {
+            "title": "title",
+            "text": "text",
+            "url": "url"
+        }
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "botToken": "8467995169:AAEbSbKoFqI5jdDnkTYsUM34U3pDMeFbMc0",
+  "chatId": "-1001521577047",
+  "discussionGroupId": "-1004317064975",
+  "enabled": true,
+  "allowedGenres": [],
+  "_genreFilterHelp": "Empty array = no filter (all genres). Set to whitelist TMDB genre IDs to restrict pushes. Common: [27,53] Horror+Thriller, [28,12,878] Action+Adventure+SciFi, [27,53,28] Horror+Thriller+Action, [35,10749,18] Comedy+Romance+Drama, [16,10751] Animation+Family",
+  "_discussionGroupHelp": "Discussion group linked to @absolutecinemaid channel. Used for user-submitted film/series requests (POST /api/request). Channel stays clean — only auto-pushed promos/recaps.",
+  "weeklyRecapEnabled": true
+}

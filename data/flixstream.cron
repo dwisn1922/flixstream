@@ -1,0 +1,9 @@
+# Absolute Cinema — Daily Maintenance Cron Jobs
+# Loads environment from ~/.bashrc-style shell context
+
+# Refresh sitemap cache daily at 6 AM WIB
+0 6 * * * cd /home/ubuntu/flixstream && curl -s https://bioskopgratis.my.id/sitemap.xml > /dev/null && echo "[$(date)] Sitemap refreshed" >> /home/ubuntu/flixstream/data/cron.log
+
+# Telegram auto-push — 2x daily at 7 AM and 7 PM WIB (prime times)
+0 7 * * * cd /home/ubuntu/flixstream && TZ='Asia/Jakarta' node scripts/telegram-push.js >> /home/ubuntu/flixstream/data/cron.log 2>&1
+0 19 * * * cd /home/ubuntu/flixstream && TZ='Asia/Jakarta' node scripts/telegram-push.js >> /home/ubuntu/flixstream/data/cron.log 2>&1
